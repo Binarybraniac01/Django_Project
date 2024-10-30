@@ -39,3 +39,8 @@ media/
 *.DS_Store
 *.swp
 *.swo
+
+
+# Others
+main.py
+templates/

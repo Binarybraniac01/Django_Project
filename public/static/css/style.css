@@ -1,6 +1,6 @@
 /********** Template CSS **********/
 :root {
-    --primary: #86B817;
+    --primary: #86b817;
     --secondary: #FE8800;
     --light: #F5F5F5;
     --dark: #14141F;
@@ -141,7 +141,7 @@
 
 /*** Hero Header ***/
 .hero-header {
-    background: linear-gradient(rgba(20, 20, 31, .7), rgba(20, 20, 31, .7)), url(../img/fort.jpg);
+    background: linear-gradient(rgba(20, 20, 31, .7), rgba(20, 20, 31, .7)), url(../lib/img/fort.jpg);
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
