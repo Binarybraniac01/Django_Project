@@ -4,7 +4,11 @@ from django.contrib import admin
 from home.models import *
 
 class Fort_Details_Admin(admin.ModelAdmin):
-    list_display = ["district", "fort_name", "lat", "lon", "link"]
-    search_fields = ["district", "fort_name"]
+    list_display = ["fort_id","fort_district", "fort_name", "fort_latitude", "fort_longitude", "link"]
+    search_fields = ["fort_district", "fort_name"]
 
-admin.site.register(Fort_Details, Fort_Details_Admin)
+admin.site.register(Forts, Fort_Details_Admin)
+admin.site.register(latitude_longitude)
+admin.site.register(user_location)
+admin.site.register(Route)
+admin.site.register(Result)

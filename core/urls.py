@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from home.views import *
+from user.views import *
 
 # for media url
 from django.conf.urls.static import static
@@ -24,8 +25,14 @@ from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
-    path('', home_view),
-    path('admin/', admin.site.urls),
+    path('', home_view, name='home_view'),
+    path('send-coordinates/', send_coordinates),
+    path('register-page/', register_page),
+    path('login-page/', login_page),
+    path('logout/', logout_view),
+
+    
+    path('admin/', admin.site.urls)
 ]
 
 

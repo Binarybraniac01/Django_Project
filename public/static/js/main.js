@@ -60,27 +60,27 @@ $(document).ready(function() {
         navigator.geolocation.getCurrentPosition(function(position) {
             let latitude = position.coords.latitude;
             let longitude = position.coords.longitude;
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
             // Show loading indicator
             $('#user-loc-animation').show();
 
-            // Send coordinates to Flask using AJAX (explained in Flask code)
+            // Send coordinates to djabgo using AJAX 
             $.ajax({
-                url: "/send-coordinates", // Replace with your Flask endpoint
+                url: "send-coordinates/",
                 type: "POST",
+                headers: {
+                  'X-CSRFToken': csrfToken  // Add the CSRF token here
+                },
                 data: {
                     latitude: latitude,
-                    longitude: longitude
+                    longitude: longitude,
                 },
+                dataType : "json",
                 success: function(response) {
-                      console.log("Location received:", response);
-//                    alert(response); // Display a success message from Flask
-                      // hide loading indicator
+                      console.log(response.success_msg);
+
                       $('#user-loc-animation').hide();
-//                },
-//                error: function(jqXHR, textStatus, errorThrown) {
-//                    console.error("Error sending coordinates:", textStatus, errorThrown);
-//                    alert("Error sending coordinates. Please check the console for details.");
                 }
             });
         }, function(error) {

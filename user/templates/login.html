@@ -1,0 +1,41 @@
+
+{% extends "base.html" %}
+
+
+{% block content %}
+
+
+
+
+<div class="container mt-3 mb-3">
+
+    
+    
+    <form class="p-2 mx-auto card shadow-lg col-6 "  method="post">
+
+        {% csrf_token %}
+
+        <h2 class="text-center">Log In</h2>
+        <hr>
+
+        <div class="mb-3">
+          <label for="inputusername" class="form-label">Username</label>
+          <input type="text" required name="username" class="form-control" >
+        </div>
+        <div class="mb-3">
+          <label for="inputpass" class="form-label">Password</label>
+          <input type="password" required name="password" class="form-control" >
+        </div>
+        <button type="submit" class="btn btn-success">Log In</button>
+        <p class="mt-2">Don't have account then<a href="/register-page/"> Register? </a></p>
+      </form>
+
+</div>
+
+
+
+
+
+{% endblock %}
+
+
