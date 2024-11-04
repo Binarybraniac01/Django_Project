@@ -20,8 +20,8 @@ class Forts(models.Model):
     fort_id = models.AutoField(primary_key=True)
     fort_name = models.CharField(max_length=100)
     fort_district = models.CharField(max_length=100)
-    fort_latitude = models.DecimalField(max_digits=11, decimal_places=8, null=True, blank=True)
-    fort_longitude = models.DecimalField(max_digits=11, decimal_places=8, null=True, blank=True)
+    fort_latitude = models.FloatField(null=True, blank=True)
+    fort_longitude = models.FloatField(null=True, blank=True)
     link = models.URLField()
 
     class Meta:
@@ -35,10 +35,10 @@ class Forts(models.Model):
 
 class latitude_longitude(models.Model):
     plan_id = models.AutoField(primary_key=True)
-    origin_latitude = models.DecimalField(max_digits=11, decimal_places=8, null=True, blank=True)
-    origin_longitude = models.DecimalField(max_digits=11, decimal_places=8, null=True, blank=True)
-    destination_latitude = models.DecimalField(max_digits=11, decimal_places=8, null=True, blank=True)
-    destination_longitude = models.DecimalField(max_digits=11, decimal_places=8, null=True, blank=True)
+    origin_latitude = models.FloatField(null=True, blank=True)
+    origin_longitude = models.FloatField(null=True, blank=True)
+    destination_latitude = models.FloatField(null=True, blank=True)
+    destination_longitude = models.FloatField(null=True, blank=True)
 
     class Meta:
         ordering = ['plan_id'] 
@@ -49,8 +49,8 @@ class latitude_longitude(models.Model):
 
 class user_location(models.Model):
   u_id = models.AutoField(primary_key=True)
-  user_latitude = models.DecimalField(max_digits=11, decimal_places=8, null=True, blank=True)
-  user_longitude = models.DecimalField(max_digits=11, decimal_places=8, null=True, blank=True)
+  user_latitude = models.FloatField(null=True, blank=True)
+  user_longitude = models.FloatField(null=True, blank=True)
 
   class Meta:
         ordering = ['u_id'] 
@@ -100,4 +100,14 @@ class Result(NullableModel):
 
 
 
-    
+class all_trips(models.Model):
+    trip_id = models.AutoField(primary_key=True)
+    trip_district = models.CharField(max_length=50)
+    forts_visited = models.CharField(max_length=50)
+    required_time = models.CharField(max_length=100)
+    minimum_cost = models.FloatField(null=True, blank=True)
+    date = models.DateField()
+
+    def __repr__(self) :
+        return f"({self.trip_id},{self.trip_district},{self.forts_visited},{self.required_time},{self.minimum_cost}, {self.date})"
+

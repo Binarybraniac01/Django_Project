@@ -27,6 +27,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 urlpatterns = [
     path('', home_view, name='home_view'),
     path('send-coordinates/', send_coordinates),
+    path('generateplan/', generateplan, name='generateplan'),
     path('register-page/', register_page),
     path('login-page/', login_page),
     path('logout/', logout_view),
