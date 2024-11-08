@@ -16,8 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+
 from home.views import *
 from user.views import *
+from recommendations.views import *
 
 # for media url
 from django.conf.urls.static import static
@@ -26,13 +28,16 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     path('', home_view, name='home_view'),
-    path('send-coordinates/', send_coordinates),
+    path('send-coordinates/', send_coordinates), # remember to delete user specific coordinates and optimize code for that
     path('generateplan/', generateplan, name='generateplan'),
+
+    path('ourplans/', ourplans, name='ourplans'),
+    path('recommdirection/', recommdirection, name='recommdirection'),
+    path('recommdirection/send-coordinates/', send_coordinates, name='send_coordinates'),
+
     path('register-page/', register_page),
     path('login-page/', login_page),
     path('logout/', logout_view),
-
-    
     path('admin/', admin.site.urls)
 ]
 

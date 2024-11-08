@@ -20,9 +20,3 @@ class UserData(models.Model):
         return self.user_district
 
 
-class UserGeneratedPlans(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name="user_rel")
-    '''
-    here you will add the all trips fields so that the data can be sorted for each user
-    '''
-

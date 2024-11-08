@@ -11,4 +11,3 @@ class UserDataAdmin(admin.ModelAdmin):
     ]
 
 admin.site.register(UserData, UserDataAdmin)
-admin.site.register(UserGeneratedPlans)

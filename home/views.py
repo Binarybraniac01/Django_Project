@@ -7,6 +7,8 @@ from django.contrib.auth.decorators import login_required
 
 from home.models import *
 from user.models import *
+from recommendations.models import all_trips
+
 
 #
 import urllib3
@@ -45,6 +47,8 @@ def home_view(request):
             if request.user.is_authenticated:
                 user_data, created = UserData.objects.get_or_create(user=request.user)
                 user_data.user_district = user_district
+                user_data.curr_lat = 0.0
+                user_data.curr_log = 0.0
                 user_data.save()
 
             # variable for showing container or simple text
@@ -77,33 +81,30 @@ def send_coordinates(request):
         print(usr_longitude)
 
         # deleting database data if already existed
-        latitude_longitude.objects.all().delete()
+        latitude_longitude.objects.filter(user= request.user).delete()
 
         # Inserting user location to database
-        user_lat_long = latitude_longitude.objects.create(origin_latitude=usr_latitude, origin_longitude=usr_longitude)
+        user_lat_long = latitude_longitude.objects.create(user=request.user, origin_latitude=usr_latitude, origin_longitude=usr_longitude)
         user_lat_long.save()
         print("Co-ordinated recieved")
 
         # Deleting user locations table
-        user_location.objects.all().delete()
-        
-
-        new_user_lat_long = user_location.objects.create(user_latitude=usr_latitude, user_longitude=usr_longitude)
-        new_user_lat_long.save()
+        # user_location.objects.all().delete()
+        # new_user_lat_long = user_location.objects.create(user_latitude=usr_latitude, user_longitude=usr_longitude)
+        # new_user_lat_long.save()
 
         # adding data in Userdata table
-        if request.user.is_authenticated:
-            user_data = UserData.objects.get(user=request.user)
-            user_data.curr_lat = usr_latitude
-            user_data.curr_log = usr_longitude
-            user_data.save()
+        user_data = UserData.objects.get(user=request.user)
+        user_data.curr_lat = usr_latitude
+        user_data.curr_log = usr_longitude
+        user_data.save()
 
         # deleting route table data
-        Route.objects.all().delete()
+        Route.objects.filter(user= request.user).delete()
         print("deleted route table vales ")
 
         # deleting result table data
-        Result.objects.all().delete()
+        Result.objects.filter(user= request.user).delete()
         print("deleted result table vales ")
 
         data = {"success_msg": "Coordinates recieved successfully!"} # json response need data argument for the our data to load
@@ -111,6 +112,8 @@ def send_coordinates(request):
         return JsonResponse(data= data, safe=False) # safe to be false is need for django to serialize the data 
 
 
+
+@login_required(login_url="/login-page/")
 def generateplan(request):
 
     triggerplan = "none"
@@ -135,10 +138,8 @@ def generateplan(request):
             fort_sel = "none"
             print("fort none")
 
-            abcd = user_location.objects.first()
-            print(abcd)
-            user_location.objects.all().delete()
-            if not abcd:
+            abcd = UserData.objects.get(user= request.user)
+            if abcd.curr_lat == 0.0:
                 print("no lt-lg")
                 ltlg = "nolocation"
 
@@ -148,17 +149,17 @@ def generateplan(request):
         else:
             fort_sel = "selected"
 
-            # added another table containing user_location ()
+            # added another table containing user location ()
 
-            user_lat_long = user_location.objects.first()
+            user_lat_long = UserData.objects.get(user=request.user)
 
-            if user_lat_long is not None:
-                user_lat = user_lat_long.user_latitude
-                user_long = user_lat_long.user_longitude
+            if user_lat_long is not None and user_lat_long.curr_lat != 0.0 :
+                user_lat = user_lat_long.curr_lat
+                user_long = user_lat_long.curr_log
 
                 # deleting user loaction table
-                user_location.objects.all().delete()
-                print("deleted  user location table vales in user location table ")
+                # user_location.objects.all().delete()
+                # print("deleted  user location table vales in user location table ")
                 print(f"User location : user_lt: {user_lat} user_lg: {user_long}")
 
 
@@ -263,13 +264,13 @@ def generateplan(request):
 
                         # for updating lt/lg in database for planning tour
 
-                        user_g_lat_long1 = latitude_longitude.objects.first()
+                        user_g_lat_long1 = latitude_longitude.objects.filter(user=request.user).first()
                         if user_g_lat_long1 is not None and count == 0:
                             user_g_lat_long1.destination_latitude = user_sel_fort_lat1
                             user_g_lat_long1.destination_longitude = user_sel_fort_long1
                             user_g_lat_long1.save()
 
-                            new_user_lat_long1 = latitude_longitude.objects.create(origin_latitude=user_sel_fort_lat1,
+                            new_user_lat_long1 = latitude_longitude.objects.create(user=request.user, origin_latitude=user_sel_fort_lat1,
                                                                     origin_longitude=user_sel_fort_long1)
                             # db.session.add(new_user_lat_long1)
                             new_user_lat_long1.save()
@@ -284,7 +285,7 @@ def generateplan(request):
                             new_plan.destination_longitude = user_sel_fort_long1
                             new_plan.save()
 
-                            new_plan_lat_long = latitude_longitude.objects.create(origin_latitude=user_sel_fort_lat1,
+                            new_plan_lat_long = latitude_longitude.objects.create(user=request.user, origin_latitude=user_sel_fort_lat1,
                                                                    origin_longitude=user_sel_fort_long1)
                             # db.session.add(new_plan_lat_long)
                             new_plan_lat_long.save()
@@ -298,7 +299,7 @@ def generateplan(request):
 
                 # filling values in th table to be used in function
                 # filling values in the table to be used in the function
-                table_fill = latitude_longitude.objects.all()
+                table_fill = latitude_longitude.objects.filter(user=request.user)
                 print(table_fill)
 
                 for row in table_fill:
@@ -307,7 +308,7 @@ def generateplan(request):
                         o_lt_lg = f"{o_lt},{o_lg}"
                         d_lt_lg = f"{d_lt},{d_lg}"
 
-                        fill_data = Route.objects.create(origin=o_lt_lg, destination=d_lt_lg, mode="driving",
+                        fill_data = Route.objects.create(user=request.user, origin=o_lt_lg, destination=d_lt_lg, mode="driving",
                                           traffic_model="best_guess",
                                           departure_time="now")
                         fill_data.save()
@@ -327,7 +328,7 @@ def generateplan(request):
                     data = []
 
                     # Query data from the Route table
-                    routes = Route.objects.all()
+                    routes = Route.objects.filter(user=request.user)
 
                     for route in routes:
                         origin = route.origin
@@ -394,6 +395,7 @@ def generateplan(request):
                             continue
 
                         result = Result.objects.create(
+                            user = request.user,
                             request_time=request_time,
                             origin=t['origin'],
                             destination=t['destination'],
@@ -436,7 +438,7 @@ def generateplan(request):
                 for name in range(len(plan_sorted_locatons) - 1):
                     l_names.append((plan_sorted_locatons[name], plan_sorted_locatons[name + 1]))
 
-                plan_box = Result.objects.all()
+                plan_box = Result.objects.filter(user=request.user)
                 for dt in plan_box:
                     org = dt.origin
                     dis = dt.destination
@@ -655,11 +657,12 @@ def generateplan(request):
                 current_date = datetime.datetime.now().date()
                 # print(current_date)
 
-                if request.user.is_authenticated:
-                    user_data, created = UserData.objects.get_or_create(user=request.user)
-                    district_name = user_data.user_district
+                
+                user_data = UserData.objects.get(user=request.user)
+                district_name = user_data.user_district
+                user = request.user
 
-                trip_data = all_trips.objects.create(trip_district=district_name, forts_visited=forts_visited_string, required_time=req_time, minimum_cost=total_cost, date=current_date)
+                trip_data = all_trips.objects.create(user=user, trip_district=district_name, forts_visited=forts_visited_string, required_time=req_time, minimum_cost=total_cost, date=current_date)
                 trip_data.save()
 
 

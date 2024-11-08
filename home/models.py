@@ -1,5 +1,5 @@
 from django.db import models
-import uuid
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -29,11 +29,12 @@ class Forts(models.Model):
 
 
     def __str__(self):
-        return self.fort_name
+        return f"{self.fort_id}, {self.fort_name}, {self.fort_district}"
 
 
 
 class latitude_longitude(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name="user_lat_lon")
     plan_id = models.AutoField(primary_key=True)
     origin_latitude = models.FloatField(null=True, blank=True)
     origin_longitude = models.FloatField(null=True, blank=True)
@@ -47,19 +48,20 @@ class latitude_longitude(models.Model):
           return f"{self.plan_id}"
 
 
-class user_location(models.Model):
-  u_id = models.AutoField(primary_key=True)
-  user_latitude = models.FloatField(null=True, blank=True)
-  user_longitude = models.FloatField(null=True, blank=True)
+# class user_location(models.Model):
+#   u_id = models.AutoField(primary_key=True)
+#   user_latitude = models.FloatField(null=True, blank=True)
+#   user_longitude = models.FloatField(null=True, blank=True)
 
-  class Meta:
-        ordering = ['u_id'] 
+#   class Meta:
+#         ordering = ['u_id'] 
 
-  def __str__(self) :
-      return f"{self.u_id},{self.user_latitude},{self.user_longitude}"
+#   def __str__(self) :
+#       return f"{self.u_id},{self.user_latitude},{self.user_longitude}"
   
 
 class Route(NullableModel):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name="user_route")
     id = models.AutoField(primary_key=True)
     origin = models.CharField(max_length=255)
     destination = models.CharField(max_length=255)
@@ -76,6 +78,7 @@ class Route(NullableModel):
 
 
 class Result(NullableModel):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name="user_result")
     id = models.AutoField(primary_key=True)
     request_time = models.DateTimeField()
     origin = models.CharField(max_length=255)
@@ -99,15 +102,4 @@ class Result(NullableModel):
         return f"{self.id},{self.origin},{self.destination},{self.distance_text},{self.duration_text}"
 
 
-
-class all_trips(models.Model):
-    trip_id = models.AutoField(primary_key=True)
-    trip_district = models.CharField(max_length=50)
-    forts_visited = models.CharField(max_length=50)
-    required_time = models.CharField(max_length=100)
-    minimum_cost = models.FloatField(null=True, blank=True)
-    date = models.DateField()
-
-    def __repr__(self) :
-        return f"({self.trip_id},{self.trip_district},{self.forts_visited},{self.required_time},{self.minimum_cost}, {self.date})"
 
