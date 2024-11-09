@@ -34,6 +34,7 @@ urlpatterns = [
     path('ourplans/', ourplans, name='ourplans'),
     path('recommdirection/', recommdirection, name='recommdirection'),
     path('recommdirection/send-coordinates/', send_coordinates, name='send_coordinates'),
+    path('recommgenerateplan/', generateplan, name='generateplan'),
 
     path('register-page/', register_page),
     path('login-page/', login_page),

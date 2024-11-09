@@ -5,10 +5,11 @@ from django.contrib.auth.models import User
 
 class all_trips(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name="user_trips")
+    user_name = models.CharField(max_length=50, null=True, blank=True)
     trip_id = models.AutoField(primary_key=True)
-    trip_district = models.CharField(max_length=50)
-    forts_visited = models.CharField(max_length=50)
-    required_time = models.CharField(max_length=100)
+    trip_district = models.CharField(max_length=50,null=True, blank=True)
+    forts_visited = models.CharField(max_length=50, null=True, blank=True)
+    required_time = models.CharField(max_length=100, null=True, blank=True)
     minimum_cost = models.FloatField(null=True, blank=True)
     date = models.DateField(null=True, blank=True)
 
@@ -29,7 +30,7 @@ class all_recommendations(models.Model):
     recom_forts = models.CharField(max_length=500, null=True, blank=True)
     recom_title = models.CharField(max_length=200, null=True, blank=True)
     recom_details = models.TextField(null=True, blank=True)
-    image_name = models.ImageField(upload_to='img/recomendation_imgs') 
+    image_name = models.ImageField(upload_to='img/recomendation_imgs', null=True, blank=True) 
     date = models.DateField(auto_now_add=True, null=True)
 
     def __repr__(self) -> str:

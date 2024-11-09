@@ -98,6 +98,19 @@ function showLoading() {
 }
 
 
+// For auto Scrolling in generate plan or forts found
+document.addEventListener("DOMContentLoaded", function() {
+  const forts_found = document.getElementById("forts_found"); 
+  const generatedplan = document.getElementById("generatedplan");
+  
+  if (forts_found) {
+    forts_found.scrollIntoView({ behavior: "smooth" });
+  }
+
+  if (generatedplan) {
+    generatedplan.scrollIntoView({ behavior: "smooth" });
+  }
+});
 
 
 

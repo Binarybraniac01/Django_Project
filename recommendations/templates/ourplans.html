@@ -64,6 +64,7 @@
                     <div id="output-area" style="background-color: #e0f2f1;">
                         <div class="py-4">
                             <form id="generate-tour" method="post">
+                                {% csrf_token %}
                                 <div class="form-check-group d-flex flex-wrap py-3">
                                     {% for fort in fortsname %}
                                         <div class="form-check form-check-inline">
@@ -98,7 +99,7 @@
                                     </div>
 
                                     <div id="user-loc" class="col d-flex justify-content-center align-items-center mt-2">
-                                        <button onclick="showLoading()" type="submit" class="btn btn-primary rounded-pill py-2 px-4 top-0 end-0 me-2" style="margin-top: 7px;" form="generate-tour" formaction="/recommgenerateplan">Generate Plan</button>
+                                        <button onclick="showLoading()" type="submit" class="btn btn-primary rounded-pill py-2 px-4 top-0 end-0 me-2" style="margin-top: 7px;" form="generate-tour" formaction="/recommgenerateplan/">Generate Plan</button>
                                         <div id="loading-animation" style="display: none;">
                                             <div class="ring">Generating Plan
                                                 <span class="sring"></span>
@@ -145,7 +146,7 @@
     <!-- tried inheritance but as the start it checks if it is found and does not execute the query, goes directly to else-->
     <!--Shown when user submits fort and personal location-->
     {% elif triggerplan == "trigger" %}
-        <div class="container-fluid">
+        <div class="container-fluid" id="generatedplan">
             <h1 class="text-center">This is generated plan...</h1>
 <!--            <form id="my-form">-->
             {% load custom_filters %}

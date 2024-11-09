@@ -5,7 +5,7 @@ from user.models import *
 
 class all_trips_admin(admin.ModelAdmin):
     list_display = [
-        "user",
+        "user_name",
         "trip_id",
         "trip_district",
         "forts_visited",
@@ -13,11 +13,13 @@ class all_trips_admin(admin.ModelAdmin):
         "minimum_cost",
         "date"
     ]
-    # search_fields = ["name"]
+    search_fields = ["user_name"]
 
+    # we could have added filed without affecting the database but it only for view purpose
+    # you cannot perform search on them   
     # def name(self, obj):
-    #     name_obj =  UserData.objects.filter(user=obj.user).first()
-    #     return name_obj.user
+    #     name_obj =  User.objects.filter(username=obj.user).first()
+    #     return name_obj.first_name
 
 
 class all_recommendations_admin(admin.ModelAdmin):

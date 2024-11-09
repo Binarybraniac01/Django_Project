@@ -117,10 +117,19 @@ def send_coordinates(request):
 def generateplan(request):
 
     triggerplan = "none"
-    active1 = "active"
     found = "none"
     ltlg = "none"
     fort_sel = "none"
+
+    # Integrated below block of code here to avoid wirting same function again in recommendations 
+    if 'recommgenerateplan' in request.path:
+        template_name = "ourplans.html"
+        active_tab = "active2"
+    else:
+        # Use a default template 
+        template_name = "index.html"
+        active_tab = "active1"
+    #------------------End-----------------#
 
     if request.method == "POST":
 
@@ -143,7 +152,7 @@ def generateplan(request):
                 print("no lt-lg")
                 ltlg = "nolocation"
 
-            return render(request, "index.html", context= {"active1":active1, "ltlg":ltlg, "fort_sel":fort_sel, "loading_animation":loading_animation})
+            return render(request, template_name, context= {active_tab:"active", "ltlg":ltlg, "fort_sel":fort_sel, "loading_animation":loading_animation})
 
 
         else:
@@ -530,20 +539,6 @@ def generateplan(request):
                 # print(raw_data)
                 # print(len(raw_data))
 
-
-                #---old code--#
-                # for tuple_data in info_box[1:]:
-                #     first_string = tuple_data[0]
-                #     second_string = tuple_data[1]
-                #     last_string = tuple_data[-1]
-                #     raw_data.append((first_string, second_string, last_string))
-                #end#
-                # print(raw_data)
-                # raw_data = [('Sankshi fort', 'Manikgad (Raigad)', 'Travel cost: ₹113.28'),
-                #         ('Manikgad (Raigad)', 'Sudhagad', 'Travel cost: ₹373.93'),
-                #         ('Sudhagad', 'Mrugagad', 'Travel cost: ₹194.05'),
-                #         ('Mrugagad', 'Padargad', 'Travel cost: ₹413.79')]
-
                 fort_names = []
                 cost = []
 
@@ -582,12 +577,6 @@ def generateplan(request):
                         cost.append(float(travel_cost.split('₹')[-1]))
 
                     total_cost = sum(cost)
-
-                    # print("Forts:", fort_names)
-                    # print("Travel Costs:", cost)
-                    # print("Total Travel Cost:", total_cost)
-
-
 
                 # -----------------------------------------------------------------------------------------#
                 # Getting total time for showing user
@@ -662,34 +651,17 @@ def generateplan(request):
                 district_name = user_data.user_district
                 user = request.user
 
-                trip_data = all_trips.objects.create(user=user, trip_district=district_name, forts_visited=forts_visited_string, required_time=req_time, minimum_cost=total_cost, date=current_date)
+                trip_data = all_trips.objects.create(user=user, user_name=str(user), trip_district=district_name, forts_visited=forts_visited_string, required_time=req_time, minimum_cost=total_cost, date=current_date)
                 trip_data.save()
-
-
-                #----------------- code for adding fort and district names ------------------------------------ #
-                # d_v_n = []
-                # f_v_n = []
-                # fil = Forts.query.all()
-                # # db.session.commit()
-                # for rec in fil:
-                #     d_v_n.append(rec.fort_district)
-                #     f_v_n.append(rec.fort_name)
-                # db.session.commit()
-                #
-                # for dd, vv in zip(d_v_n, f_v_n):
-                #     v_data = visit_count(district_name=dd, fort_name=vv)
-                #     db.session.add(v_data)
-                #     db.session.commit()
-                #--------------------------- end --------------------------------------#
 
                 triggerplan = "trigger"
                 ltlg = "none"
 
-                return render(request, "index.html", context= {"triggerplan":triggerplan, "active1":active1, "ltlg":ltlg, "fort_sel":fort_sel, "loading_animation":loading_animation, "info_box":info_box, "items":data, "total_travel_time":total_travel_time, "estimated_days":estimated_days, "fuel_n_cost":fuel_n_cost, "total_f_c":total_f_c})
+                return render(request, template_name, context= {"triggerplan":triggerplan, active_tab:"active", "ltlg":ltlg, "fort_sel":fort_sel, "loading_animation":loading_animation, "info_box":info_box, "items":data, "total_travel_time":total_travel_time, "estimated_days":estimated_days, "fuel_n_cost":fuel_n_cost, "total_f_c":total_f_c})
 
             else:
                 print("no lt-lg")
                 ltlg = "nolocation"
 
-                return render(request, "index.html", context= {"active1":active1, "ltlg":ltlg, "fort_sel":fort_sel, "loading_animation":loading_animation})
+                return render(request, template_name, context= {active_tab:"active", "ltlg":ltlg, "fort_sel":fort_sel, "loading_animation":loading_animation})
 

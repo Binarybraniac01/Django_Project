@@ -29,7 +29,7 @@
 
 <!-- Service Start-->
 {% if found == "found" %}
-<div class="container-fluid">
+<div class="container-fluid" id="forts_found">
     <h1>List of Forts you can visit in {{user_district}}...... </h1>
     <div class="container-fluid py-5">
             <div id="output-area" style="display: '{{display}}'; background-color: #e0f2f1;">
@@ -122,7 +122,7 @@
 <!-- tried inheritance but as the start it checks if it is found and does not execute the query, goes directly to else-->
 <!--Shown when user submits fort and personal location-->
 {% elif triggerplan == "trigger" %}
-<div class="container-fluid">
+<div class="container-fluid" id="generatedplan">
     <h1 class="text-center">This is generated plan...</h1>
     {% load custom_filters %}
     {% for plan, item in info_box|zip_lists:items %}

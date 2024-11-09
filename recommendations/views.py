@@ -111,4 +111,8 @@ def recommdirection(request):
     return render(request, "ourplans.html", context= {"active2":active2, "tbl_data":tbl_data, "direc_data":direc_data, "found":found, "fortsname":fortsname})
 
 
-
+# note : regarding recommendation generate plan
+'''
+- we have redirected the recommendation generate plan urls functionalities to home.views function
+- The function will work for both home and recommendations as it delivers same functionalities
+'''
