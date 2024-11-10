@@ -9,11 +9,13 @@ from datetime import datetime
 def ourplans(request):
     active2 = "active"
 
+    #Todo: Add pagination in table
     planned_trips = all_trips.objects.filter(user=request.user).order_by('-trip_id')
     if not planned_trips:
         return render(request, "not_enough_data.html", context={"active2":active2})
     
     ############################ For Randomized Recommendations #########################################
+    # Add below code block if you want to 1 day limit to recom data creation for user
     # check for the date constraints so that same day you dont make double recom for same user
     date_check = all_recommendations.objects.filter(user=request.user).first()
     if date_check is not None:
@@ -24,9 +26,10 @@ def ourplans(request):
         else:
             print("dates Matched") 
 
-    
-    # Check if the date does not match with the current date the excute the code
-    if date_check is None:
+    # Check if database is None to add new entries of user
+    # Its for both new user and the user whos yesterdays data is deleted
+    data_availability = all_recommendations.objects.filter(user=request.user).first()
+    if data_availability is None:
             # Retrieve unique trip districts using Django's ORM
             planned_trips_dist = list(
                 all_trips.objects.filter(user=request.user)

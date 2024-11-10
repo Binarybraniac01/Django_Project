@@ -31,7 +31,7 @@
                 <div class="img-wrapper"><img src="/media/img/recomendation_imgs/{{item.image_name}}" class="d-block w-100" alt="No Picture Found"> </div>
                 <div class="card-body">
                     <h5 class="card-title">{{item.recom_title}}</h5>
-                    <p class="card-text">{{item.recom_details}}</p>
+                    <p class="card-text">{{ item.recom_details|truncatechars:100 }}</p>
                     <form>
                         {% csrf_token %}
                         <button formmethod="post" formaction="/recommdirection/" name="rec_id" value="{{item.recommendation_id}}" type="submit" class="btn btn-primary">View More</button>
