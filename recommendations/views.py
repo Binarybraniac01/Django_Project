@@ -15,19 +15,20 @@ def ourplans(request):
         return render(request, "not_enough_data.html", context={"active2":active2})
     
     ############################ For Randomized Recommendations #########################################
-    # Add below code block if you want to 1 day limit to recom data creation for user
-    # check for the date constraints so that same day you dont make double recom for same user
-    date_check = all_recommendations.objects.filter(user=request.user).first()
-    if date_check is not None:
-        first_date_obj = date_check.date
-        current_date = datetime.now().date() # Convert the date string to a datetime object
-        if first_date_obj != current_date:
-            all_recommendations.objects.filter(user=request.user).delete()  
-        else:
-            print("dates Matched") 
+    # # Add below code block if you want to 1 day limit to recom data creation for user
+    # # check for the date constraints so that same day you dont make double recom for same user
+    # date_check = all_recommendations.objects.filter(user=request.user).first()
+    # if date_check is not None:
+    #     first_date_obj = date_check.date
+    #     current_date = datetime.now().date() # Convert the date string to a datetime object
+    #     if first_date_obj != current_date:
+    #         all_recommendations.objects.filter(user=request.user).delete()  
+    #     else:
+    #         print("dates Matched") 
 
-    # Check if database is None to add new entries of user
-    # Its for both new user and the user whos yesterdays data is deleted
+    # Make sure the previous records are deleted and then procced to execution
+    # Below block add new recom each time user visits the end point
+    all_recommendations.objects.filter(user=request.user).delete()
     data_availability = all_recommendations.objects.filter(user=request.user).first()
     if data_availability is None:
             # Retrieve unique trip districts using Django's ORM
@@ -102,7 +103,7 @@ def recommdirection(request):
 
     # getting fort names and id
     fort_string = direc_data.recom_forts
-    forts_list = eval(fort_string)
+    forts_list = eval(fort_string) # fort_string contaions list as string eg. "[..data..] ", so converts it to list
     print(forts_list)
 
     fortsname =[]
