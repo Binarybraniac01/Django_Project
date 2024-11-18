@@ -20,6 +20,7 @@ from django.urls import path
 from home.views import *
 from user.views import *
 from recommendations.views import *
+from knowaboutforts.views import *
 
 # for media url
 from django.conf.urls.static import static
@@ -35,6 +36,11 @@ urlpatterns = [
     path('recommdirection/', recommdirection, name='recommdirection'),
     path('recommdirection/send-coordinates/', send_coordinates, name='send_coordinates'),
     path('recommgenerateplan/', generateplan, name='generateplan'),
+
+    path('knowaboutforts/', knowaboutforts, name='knowaboutforts'),
+    path('getdistforts/<dist>/', getdistforts, name='getdistforts'),
+    path('searchfortname/', searchfortname, name='searchfortname'),
+    path('viewmore/<fortname>/', viewmore, name='viewmore'),
 
     path('register-page/', register_page),
     path('login-page/', login_page),
