@@ -19,13 +19,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
+import os
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-&_mgb)fh90t73iq59lzy%*&_(p9%_j7tj38vn_k-0c@_^=lcac'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-&_mgb)fh90t73iq59lzy%*&_(p9%_j7tj38vn_k-0c@_^=lcac')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = str(os.environ.get('DEBUG')) == "1" #check for debug to be false or true
 
 ALLOWED_HOSTS = []
+if not DEBUG:
+    ALLOWED_HOSTS += [os.environ.get('ALLOWED_HOST')] # allowed hosts are required when debug is false 
 
 
 # Application definition
@@ -41,6 +44,7 @@ INSTALLED_APPS = [
     'user',
     'recommendations',
     'knowaboutforts',
+    'feedback',
 ]
 
 MIDDLEWARE = [
@@ -139,3 +143,12 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Email Service Section
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = os.environ.get('Mail_USERNAME')
+EMAIL_HOST_PASSWORD = os.environ.get('Mail_PASS')

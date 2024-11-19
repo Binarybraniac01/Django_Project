@@ -21,6 +21,7 @@ from home.views import *
 from user.views import *
 from recommendations.views import *
 from knowaboutforts.views import *
+from feedback.views import *
 
 # for media url
 from django.conf.urls.static import static
@@ -41,6 +42,8 @@ urlpatterns = [
     path('getdistforts/<dist>/', getdistforts, name='getdistforts'),
     path('searchfortname/', searchfortname, name='searchfortname'),
     path('viewmore/<fortname>/', viewmore, name='viewmore'),
+
+    path('feedback/', feedback, name='feedback'),
 
     path('register-page/', register_page),
     path('login-page/', login_page),
