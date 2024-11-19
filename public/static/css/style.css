@@ -251,10 +251,10 @@
 }
 /*End Generate plan animation*/
 
+
+
 /*For looping content*/
-
 /* Existing styles... */
-
 .cust-container {
   position: relative; /* Needed for animation */
   width: 100%; /* Adjust width as needed */
@@ -282,13 +282,10 @@
   from { transform: translateX(-100%); }
   to { transform: translateX(0); }
 }
-
-
 /* end */
 
 
 /*animate content*/
-
 .para-container {
   position: relative; /* Needed for animation */
   width: 100%; /* Adjust width as needed */
@@ -313,70 +310,7 @@
 
 
 
-/* animation after get direction is clicked */
-
-#direction-animation {
-  position:Fixed;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  width: 50px;
-  height: 50px;
-  border: 5px solid #f3f3f3;
-  border-radius: 50%;
-  border-top-color: #86B817;
-  animation: spin 1s linear infinite;
-}
-
-
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-/* closed animation after get direction is clicked   */
-
-
-
-/* loading animation for use current location */
-#user-loc-animation {
-  position:Fixed;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  width: 50px;
-  height: 50px;
-  border: 5px solid #f3f3f3;
-  border-radius: 50%;
-  border-top-color: #86B817;
-  animation: spin 1s linear infinite;
-}
-
-
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-/* End of loading animation for use current location */
-
-
-
-.sticky-header {
-  overflow-y: auto; /* Enable scrolling for the table body */
-  position: relative; /* Set the position for the sticky header */
-}
-
-.sticky-header thead {
-  position: sticky; /* Make the header sticky */
-  top: 0; /* Position the header at the top of the scrollable area */
-  background-color: white; /* Optional: Set background color for better visibility */
-  z-index: 1; /* Ensure the header stays on top during scrolling */
-}
-
-
-
-
+/* carousel */
 .carousel-inner {
   padding: 1em;
 }
@@ -419,10 +353,3 @@
     height: 17em;
   }
 }
-
-
-/* iframe {
-  border: none;
-  height: 80vh;
-  width: 100%;
-} */

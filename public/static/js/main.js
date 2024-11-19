@@ -12,13 +12,15 @@ document.addEventListener('DOMContentLoaded', function () {
   const Submit_btn = document.getElementById('Submit_btn');
 
   // Add event listener to the form submission
-  Form_.addEventListener('submit', function (e) {
-      // Show the spinner by adding the 'show' class
-      spinner.classList.add('show');
-
-      // Disable the button to prevent multiple submissions
-      Submit_btn.disabled = true;
-  });
+  if (Form_){
+    Form_.addEventListener('submit', function (e) {
+        // Show the spinner by adding the 'show' class
+        spinner.classList.add('show');
+  
+        // Disable the button to prevent multiple submissions
+        Submit_btn.disabled = true;
+    });
+  }
 });
 
 
@@ -152,35 +154,36 @@ $(document).ready(function() {
 
 
 
-var multipleCardCarousel = document.querySelector(
-  "#carouselExampleControls"
-);
-if (window.matchMedia("(min-width: 768px)").matches) {
-  var carousel = new bootstrap.Carousel(multipleCardCarousel, {
-    interval: false,
-  });
-  var carouselWidth = $(".carousel-inner")[0].scrollWidth;
-  var cardWidth = $(".carousel-item").width();
-  var scrollPosition = 0;
-  $("#carouselExampleControls .carousel-control-next").on("click", function () {
-    if (scrollPosition < carouselWidth - cardWidth * 4) {
-      scrollPosition += cardWidth;
-      $("#carouselExampleControls .carousel-inner").animate(
-        { scrollLeft: scrollPosition },
-        600
-      );
+var multipleCardCarousel = document.querySelector("#carouselExampleControls");
+if(multipleCardCarousel){
+    if (window.matchMedia("(min-width: 768px)").matches) {
+        var carousel = new bootstrap.Carousel(multipleCardCarousel, {
+          interval: false,
+        });
+        var carouselWidth = $(".carousel-inner")[0].scrollWidth;
+        var cardWidth = $(".carousel-item").width();
+        var scrollPosition = 0;
+        $("#carouselExampleControls .carousel-control-next").on("click", function () {
+          if (scrollPosition < carouselWidth - cardWidth * 4) {
+            scrollPosition += cardWidth;
+            $("#carouselExampleControls .carousel-inner").animate(
+              { scrollLeft: scrollPosition },
+              600
+            );
+          }
+        });
+        $("#carouselExampleControls .carousel-control-prev").on("click", function () {
+          if (scrollPosition > 0) {
+            scrollPosition -= cardWidth;
+            $("#carouselExampleControls .carousel-inner").animate(
+              { scrollLeft: scrollPosition },
+              600
+            );
+          }
+        });
+    } else {
+        $(multipleCardCarousel).addClass("slide");
     }
-  });
-  $("#carouselExampleControls .carousel-control-prev").on("click", function () {
-    if (scrollPosition > 0) {
-      scrollPosition -= cardWidth;
-      $("#carouselExampleControls .carousel-inner").animate(
-        { scrollLeft: scrollPosition },
-        600
-      );
-    }
-  });
-} else {
-  $(multipleCardCarousel).addClass("slide");
 }
+
 
