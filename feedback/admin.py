@@ -5,7 +5,7 @@ from .models import *
 
 class FeedbackAdmin(admin.ModelAdmin):
     list_display = ["user", "name","email", "user_feedback", "rating"]
-    search_fields = ["email"]
+    search_fields = ["user"]
 
     def name(self, obj):
         user_data_obj = User.objects.get(username=obj.user)

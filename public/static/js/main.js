@@ -1,3 +1,60 @@
+
+function showLoading() {
+  // Show the loading animation
+  document.getElementById('loading-animation').style.display = 'block';
+}
+
+
+document.addEventListener('DOMContentLoaded', function () {
+  // Get references to the spinner and feedback form
+  const spinner = document.getElementById('spinner');
+  const Form_ = document.getElementById('Form');
+  const Submit_btn = document.getElementById('Submit_btn');
+
+  // Add event listener to the form submission
+  Form_.addEventListener('submit', function (e) {
+      // Show the spinner by adding the 'show' class
+      spinner.classList.add('show');
+
+      // Disable the button to prevent multiple submissions
+      Submit_btn.disabled = true;
+  });
+});
+
+
+// For auto Scrolling in generate plan or forts found
+document.addEventListener("DOMContentLoaded", function() {
+  const forts_found = document.getElementById("forts_found"); 
+  const generatedplan = document.getElementById("generatedplan");
+  
+  if (forts_found) {
+    forts_found.scrollIntoView({ behavior: "smooth" });
+  }
+
+  if (generatedplan) {
+    generatedplan.scrollIntoView({ behavior: "smooth" });
+  }
+});
+
+function showDirections(button) {
+  // Get the value of the data-item attribute
+  var itemData = button.getAttribute('data-item');
+
+  // Split the data-item attribute to extract latitude and longitude
+  var coordinates = itemData.split(',');
+  var latitude = coordinates[0].trim(); // Latitude
+  var longitude = coordinates[1].trim(); // Longitude
+
+  // Construct the Google Maps URL
+  var mapsUrl = "https://www.google.com/maps?q=" + latitude + "," + longitude;
+
+  // Open Google Maps in a new tab
+  window.open(mapsUrl, "_blank");
+}
+
+
+
+
 (function ($) {
     "use strict";
 
@@ -63,7 +120,8 @@ $(document).ready(function() {
             const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
             // Show loading indicator
-            $('#user-loc-animation').show();
+            // $('#user-loc-animation').show();
+            $('#spinner').addClass('show');
 
             // Send coordinates to djabgo using AJAX 
             $.ajax({
@@ -80,7 +138,7 @@ $(document).ready(function() {
                 success: function(response) {
                       console.log(response.success_msg);
 
-                      $('#user-loc-animation').hide();
+                      $('#spinner').removeClass('show');
                 }
             });
         }, function(error) {
@@ -90,46 +148,6 @@ $(document).ready(function() {
     });
 });
 
-
-
-function showLoading() {
-    // Show the loading animation
-    document.getElementById('loading-animation').style.display = 'block';
-}
-
-
-// For auto Scrolling in generate plan or forts found
-document.addEventListener("DOMContentLoaded", function() {
-  const forts_found = document.getElementById("forts_found"); 
-  const generatedplan = document.getElementById("generatedplan");
-  
-  if (forts_found) {
-    forts_found.scrollIntoView({ behavior: "smooth" });
-  }
-
-  if (generatedplan) {
-    generatedplan.scrollIntoView({ behavior: "smooth" });
-  }
-});
-
-
-
-
-function showDirections(button) {
-    // Get the value of the data-item attribute
-    var itemData = button.getAttribute('data-item');
-
-    // Split the data-item attribute to extract latitude and longitude
-    var coordinates = itemData.split(',');
-    var latitude = coordinates[0].trim(); // Latitude
-    var longitude = coordinates[1].trim(); // Longitude
-
-    // Construct the Google Maps URL
-    var mapsUrl = "https://www.google.com/maps?q=" + latitude + "," + longitude;
-
-    // Open Google Maps in a new tab
-    window.open(mapsUrl, "_blank");
-}
 
 
 
