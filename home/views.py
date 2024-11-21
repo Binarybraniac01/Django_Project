@@ -121,9 +121,10 @@ def generateplan(request):
     ltlg = "none"
     fort_sel = "none"
 
+    
     # Integrated below block of code here to avoid wirting same function again in recommendations 
     if 'recommgenerateplan' in request.path:
-        template_name = "ourplans.html"
+        template_name = "ourplans.html" # Todo: Errors are showing on index page fix that
         active_tab = "active2"
     else:
         # Use a default template 
@@ -281,7 +282,6 @@ def generateplan(request):
 
                             new_user_lat_long1 = latitude_longitude.objects.create(user=request.user, origin_latitude=user_sel_fort_lat1,
                                                                     origin_longitude=user_sel_fort_long1)
-                            # db.session.add(new_user_lat_long1)
                             new_user_lat_long1.save()
 
                             old_value = str(user_sel_fort_lat1)
@@ -296,7 +296,6 @@ def generateplan(request):
 
                             new_plan_lat_long = latitude_longitude.objects.create(user=request.user, origin_latitude=user_sel_fort_lat1,
                                                                    origin_longitude=user_sel_fort_long1)
-                            # db.session.add(new_plan_lat_long)
                             new_plan_lat_long.save()
 
                             old_value = str(user_sel_fort_lat1)
@@ -329,7 +328,7 @@ def generateplan(request):
                 # main function to calculate distance
                 BASE_URL = "https://api.distancematrix.ai"
 
-                API_KEY = "M9eJyEMQJNztUFo6dio9dGyU6JWJewKTDZ5LwcXyh8IA9O0mAJKy4Mkdb4qwJYKr"
+                API_KEY = "I44M9LIcZd8tyEChcXkGNlH6TjJ3H9sJbS3AYofV3slUmzGKjYgj5HeMCzRngysn"
                 #h7umDGRk3n0JI4RA1Zm1fkFRFnp1sFiEUYAysjrURSuPBZpZh2Db4gMPSHLTSUdc#
                 # Loading data from database
                 def load_data():

@@ -1,9 +1,11 @@
 /********** Template CSS **********/
+
+/* below given colours are used in this only this css file (note: In html pages its uses bootstrap colour schema eg. primary=blue) */
 :root {
-  -primary: #86b817;
-  -secondary: #FE8800;
-  -light: #F5F5F5;
-  -dark: #14141F;
+  --primary: #0d6efd; /* --primary: #86b817;  */
+  --secondary: #FE8800;
+  --light: #F5F5F5;
+  --dark: #14141F;
 }
 
 .fw-medium {
@@ -47,6 +49,7 @@
 
 
 /*** Navbar ***/
+
 .navbar-light .navbar-nav .nav-link {
     font-family: 'Nunito', sans-serif;
     position: relative;
@@ -58,6 +61,7 @@
     outline: none;
     transition: .5s;
 }
+
 
 .sticky-top.navbar-light .navbar-nav .nav-link {
     padding: 20px 0;
@@ -82,6 +86,7 @@
     .sticky-top.navbar-light {
         position: relative;
         background: #FFFFFF;
+        
     }
 
     .navbar-light .navbar-collapse {
@@ -99,6 +104,11 @@
     .navbar-light .navbar-brand img {
         max-height: 45px;
     }
+
+    #hero_image{
+      display: none;
+    }
+
 }
 
 @media (min-width: 992px) {
@@ -152,159 +162,119 @@
 }
 
 
-
-
-/* adjusting check boxes */
-.form-check-group {
-  justify-content: space-evenly; /* Ensures equal spacing */
-  width: 100%; /* Fills the container width */
+/* Custom Hero Section Styles */
+/* Search Bar Container */
+#cust_hero .search-bar-container {
+  width: 100%;
+  max-width: 500px;
+  position: relative;
+  margin-top: 20px;
 }
-/* End of form */
 
+/* Input Styling */
+#cust_hero .custom-input {
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border: 2px solid transparent;
+  transition: border-color 0.3s ease;
+}
 
-/* Optional: Adjust margin for smaller screens */
-@media (max-width: 768px) {
-  .form-check-group {
-    justify-content: flex-start; /* Align to left on smaller screens */
+#cust_hero .custom-input:focus {
+  border-color: #fff;
+  outline: none;
+}
+
+/* Button Styling */
+#cust_hero .btn-light {
+  color: #0056b3;
+  font-weight: bold;
+}
+
+#cust_hero .btn-light:hover {
+  background-color: #f8f9fa;
+  border: 1px solid #0056b3;
+}
+
+/* Animations */
+#cust_hero .animate-fade-in {
+  animation: fadeIn 1.2s ease-in-out;
+}
+
+#cust_hero .animate-slide-up {
+  animation: slideUp 1.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+  }
+  to {
+      opacity: 1;
   }
 }
 
-
-/* stat loading */
-.ring
-{
-  position:Fixed;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  width:150px;
-  height:150px;
-  background:transparent;
-  border:3px solid #3c3c3c;
-  border-radius:50%;
-  text-align:center;
-  line-height:150px;
-  font-family:sans-serif;
-  font-size:15px;
-  color:#000000;
-
-}
-.ring:before
-{
-  content:'';
-  position:absolute;
-  top:-3px;
-  left:-3px;
-  width:100%;
-  height:100%;
-  border:3px solid transparent;
-  border-top:3px solid #fff000;
-  border-right:3px solid #fff000;
-  border-radius:50%;
-  animation:animateC 2s linear infinite;
-}
-.sring
-{
-  display:block;
-  position:absolute;
-  top:calc(50% - 2px);
-  left:50%;
-  width:50%;
-  height:4px;
-  background:transparent;
-  transform-origin:left;
-  animation:animate 2s linear infinite;
-}
-.sring:before
-{
-  content:'';
-  position:absolute;
-  width:16px;
-  height:16px;
-  border-radius:50%;
-  background:#fff000;
-  top:-6px;
-  right:-8px;
-
-}
-@keyframes animateC
-{
-  0%
-  {
-    transform:rotate(0deg);
+@keyframes slideUp {
+  from {
+      transform: translateY(50px);
+      opacity: 0;
   }
-  100%
-  {
-    transform:rotate(360deg);
+  to {
+      transform: translateY(0);
+      opacity: 1;
   }
 }
-@keyframes animate
-{
-  0%
-  {
-    transform:rotate(45deg);
-  }
-  100%
-  {
-    transform:rotate(405deg);
-  }
-}
-/*End Generate plan animation*/
 
+/* Custom Hero Section Search bar end */
 
-
-/*For looping content*/
-/* Existing styles... */
-.cust-container {
-  position: relative; /* Needed for animation */
-  width: 100%; /* Adjust width as needed */
-  background-color: #fff;
-  margin: 10px;
-  padding: 15px;
-  box-sizing: border-box; /* Ensures padding/border doesn't affect width */
-  /* Optional styles for container positioning and margin */
-}
-
-.slide-in-left {
-  animation: slide-in-left 2s ease-in-out forwards;
-}
-
-.slide-in-right {
-  animation: slide-in-right 2s ease-in-out forwards;
-}
-
-@keyframes slide-in-left {
-  from { transform: translateX(100%); }
-  to { transform: translateX(0); }
-}
-
-@keyframes slide-in-right {
-  from { transform: translateX(-100%); }
-  to { transform: translateX(0); }
-}
-/* end */
 
 
 /*animate content*/
-.para-container {
-  position: relative; /* Needed for animation */
-  width: 100%; /* Adjust width as needed */
-  background-color: #fff;
-  margin: 10px;
-  padding: 15px;
-  box-sizing: border-box; /* Ensures padding/border doesn't affect width */
-  /* Optional styles for container positioning and margin */
+/* Travel Card Styling */
+.travel-card {
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #ffffff;
 }
 
-.animated-content {
-    position: relative;
-    animation: slideBottom 4s ease-in-out forwards; /* Adjust duration as needed */
-    /* left: 0; Start from the right side */
+.travel-card-body {
+  padding: 20px;
+  border-bottom: 4px solid #007bff; /* Accent color */
 }
 
-@keyframes slideBottom {
-  from { transform: translateY(40%); }
-  to { transform: translateY(0); }
+.travel-card-footer {
+  background-color: #007bff;
+  font-size: 0.9rem;
+  padding: 10px;
+}
+
+/* Slide-in Animations */
+.slide-in-left {
+  animation: slideInLeft 0.8s ease-out;
+}
+
+.slide-in-right {
+  animation: slideInRight 0.8s ease-out;
+}
+
+@keyframes slideInLeft {
+  from {
+      transform: translateX(-100%);
+      opacity: 0;
+  }
+  to {
+      transform: translateX(0);
+      opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+      transform: translateX(100%);
+      opacity: 0;
+  }
+  to {
+      transform: translateX(0);
+      opacity: 1;
+  }
 }
 /*animate content end*/
 

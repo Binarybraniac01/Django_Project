@@ -1,8 +1,20 @@
+document.addEventListener('DOMContentLoaded', function () {
+  // Get references to the spinner and feedback form
+  const spinner_ = document.getElementById('spinner');
+  const generate_tour = document.getElementById('generate-tour');
+  const Sub_btn = document.getElementById('Submit_btn');
 
-function showLoading() {
-  // Show the loading animation
-  document.getElementById('loading-animation').style.display = 'block';
-}
+  // Add event listener to the form submission
+  if (generate_tour){
+    generate_tour.addEventListener('submit', function (e) {
+        // Show the spinner by adding the 'show' class
+        spinner_.classList.add('show');
+  
+        // Disable the button to prevent multiple submissions
+        Sub_btn.disabled = true;
+    });
+  }
+});
 
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -28,13 +40,19 @@ document.addEventListener('DOMContentLoaded', function () {
 document.addEventListener("DOMContentLoaded", function() {
   const forts_found = document.getElementById("forts_found"); 
   const generatedplan = document.getElementById("generatedplan");
-  
+  const alert_ = document.getElementById("alert");
+
   if (forts_found) {
     forts_found.scrollIntoView({ behavior: "smooth" });
   }
 
   if (generatedplan) {
-    generatedplan.scrollIntoView({ behavior: "smooth" });
+    // generatedplan.scrollIntoView({ behavior: "smooth" });
+    generatedplan.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  if (alert_){
+    alert_.scrollIntoView({ behavior: "smooth" });
   }
 });
 
