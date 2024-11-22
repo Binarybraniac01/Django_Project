@@ -6,6 +6,8 @@ from django.conf import settings
 
 from .models import *
 
+import os
+
 
 def feedback(request):
     if request.method == "POST":
@@ -26,7 +28,7 @@ def feedback(request):
         subject = f"This feedback is from {request.user}"
         message = usermessage
         from_email = settings.EMAIL_HOST_USER
-        recipient_list = ['maharashtraforts.official@gmail.com']
+        recipient_list = [os.environ.get('RECIPIENT_MAILS')]  
         send_mail(subject, message, from_email, recipient_list)
 
         messages.info(request, "Feeedback submited successfully.")

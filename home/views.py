@@ -10,13 +10,14 @@ from user.models import *
 from recommendations.models import all_trips
 
 
-#
+# other imports
 import urllib3
 import json
 import requests
 import time
 import datetime
 import math
+import os
 
 
 
@@ -121,15 +122,14 @@ def generateplan(request):
     ltlg = "none"
     fort_sel = "none"
 
-    
     # Integrated below block of code here to avoid wirting same function again in recommendations 
-    if 'recommgenerateplan' in request.path:
-        template_name = "ourplans.html" # Todo: Errors are showing on index page fix that
-        active_tab = "active2"
-    else:
-        # Use a default template 
-        template_name = "index.html"
-        active_tab = "active1"
+    # if 'recommgenerateplan' in request.path:
+    #     template_name = "ourplans.html" # Todo: Errors are showing on index page fix that
+    #     active_tab = "active2"
+    # else:
+    #     # Use a default template 
+    #     template_name = "index.html"
+    #     active_tab = "active1"
     #------------------End-----------------#
 
     if request.method == "POST":
@@ -138,7 +138,6 @@ def generateplan(request):
         milage = formdata.get('milage')
         p_liter = formdata.get('p_liter')
 
-        loading_animation = "ON"
         print(f"Method {request.method} of generate plan")
         # print(f"Got user district {district_name}")            # Getting access of user district
 
@@ -153,7 +152,7 @@ def generateplan(request):
                 print("no lt-lg")
                 ltlg = "nolocation"
 
-            return render(request, template_name, context= {active_tab:"active", "ltlg":ltlg, "fort_sel":fort_sel, "loading_animation":loading_animation})
+            return render(request, "index.html", context= {"active1":"active", "ltlg":ltlg, "fort_sel":fort_sel})
 
 
         else:
@@ -229,7 +228,7 @@ def generateplan(request):
 
                     # Put together request
                     # This is your demo token
-                    token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzFjZWU2NzFhMDIyNDcxYzcwYjI4NzciLCJpYXQiOjE3Mjk5NDkyODh9.v9ULCIkkF2YWgY6IGFlGmbKtu8RKbfCFS2sUFHxhxxs'
+                    token = os.environ.get('ROUTE_API')
 
                     http = urllib3.PoolManager()
                     req = http.request('POST', URL, body=json.dumps(data),
@@ -328,7 +327,7 @@ def generateplan(request):
                 # main function to calculate distance
                 BASE_URL = "https://api.distancematrix.ai"
 
-                API_KEY = "I44M9LIcZd8tyEChcXkGNlH6TjJ3H9sJbS3AYofV3slUmzGKjYgj5HeMCzRngysn"
+                API_KEY = os.environ.get('DISTANCE_API') 
                 #h7umDGRk3n0JI4RA1Zm1fkFRFnp1sFiEUYAysjrURSuPBZpZh2Db4gMPSHLTSUdc#
                 # Loading data from database
                 def load_data():
@@ -656,11 +655,11 @@ def generateplan(request):
                 triggerplan = "trigger"
                 ltlg = "none"
 
-                return render(request, template_name, context= {"triggerplan":triggerplan, active_tab:"active", "ltlg":ltlg, "fort_sel":fort_sel, "loading_animation":loading_animation, "info_box":info_box, "items":data, "total_travel_time":total_travel_time, "estimated_days":estimated_days, "fuel_n_cost":fuel_n_cost, "total_f_c":total_f_c})
+                return render(request, "index.html", context= {"triggerplan":triggerplan, "active1":"active", "ltlg":ltlg, "fort_sel":fort_sel, "info_box":info_box, "items":data, "total_travel_time":total_travel_time, "estimated_days":estimated_days, "fuel_n_cost":fuel_n_cost, "total_f_c":total_f_c})
 
             else:
                 print("no lt-lg")
                 ltlg = "nolocation"
 
-                return render(request, template_name, context= {active_tab:"active", "ltlg":ltlg, "fort_sel":fort_sel, "loading_animation":loading_animation})
+                return render(request, "index.html", context= {"active1":"active", "ltlg":ltlg, "fort_sel":fort_sel})
 

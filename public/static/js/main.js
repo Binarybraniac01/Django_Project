@@ -56,6 +56,24 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 });
 
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Parse URL parameters
+    const params = new URLSearchParams(window.location.search);
+    const scrollId = params.get("scroll_id");
+
+    if (scrollId) {
+        const element = document.getElementById(scrollId);
+        if (element) {
+            element.scrollIntoView({ behavior: "smooth" });
+        }
+    }
+});
+
+
+
+
 function showDirections(button) {
   // Get the value of the data-item attribute
   var itemData = button.getAttribute('data-item');
@@ -71,7 +89,6 @@ function showDirections(button) {
   // Open Google Maps in a new tab
   window.open(mapsUrl, "_blank");
 }
-
 
 
 

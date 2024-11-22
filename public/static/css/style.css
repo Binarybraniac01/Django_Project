@@ -276,6 +276,26 @@
       opacity: 1;
   }
 }
+
+/* Slide-in Animations for Small Screens */
+@media (max-width: 576px) {
+  .slide-in-left, .slide-in-right {
+    animation: fadeIn 0.8s ease-out;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
 /*animate content end*/
 
 

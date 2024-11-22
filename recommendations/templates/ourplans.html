@@ -7,7 +7,7 @@
 
 
 {% if tbl_data %}
-<div class="bg-light rounded shadow-sm mx-2 mt-4">
+<div class="bg-light rounded shadow-sm mx-3 mt-4 mb-4">
     <h3 class="text-center py-2 text-primary"> Recommendations </h3>
     <div id="carouselExampleControls" class="carousel">
         <div class="carousel-inner">
@@ -92,7 +92,7 @@
                         </button>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <button type="submit" class="btn btn-primary rounded-pill w-100" form="generate-tour" formaction="/generateplan/" id="Submit_btn">
+                        <button type="submit" class="btn btn-primary rounded-pill w-100" form="generate-tour" formaction="/recommgenerateplan/" id="Submit_btn">
                             Generate Plan
                         </button>
                     </div>
@@ -185,11 +185,10 @@
 
     <!-- ALL TRIPS -->
     <!--  Default rendered -->
-    {% else %}
-    <div class="container-fluid px-2 py-5">
-        {% if planned_trips %}
-        <div class="bg-light rounded shadow-sm p-4">
-            <h5 class="text-center py-3 text-primary">All Generated Plans</h5>
+    {% elif page_obj %}
+    <div class="container-fluid px-2 py-2">
+        <div class="bg-light rounded shadow-sm p-3">
+            <h5 class="text-center py-3 text-primary" id="all_plans">All Generated Plans</h5>
             <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
                 <table class="table table-hover table-bordered table-striped align-middle">
                     <thead class="table-dark">
@@ -203,7 +202,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for trip in planned_trips %}
+                        {% for trip in page_obj %}
                         <tr>
                             <td class="text-center" scope="row">{{ forloop.counter }}</td>
                             <td class="text-center">{{ trip.trip_district }}</td>
@@ -217,11 +216,27 @@
                 </table>
             </div>
         </div>
-        {% else %}
-        <div class="text-center text-muted py-5">
-            <h6>No plans generated yet. Start planning your trip now!</h6>
-        </div>
-        {% endif %}
+
+
+        <!-- Pagination -->
+        <nav class="mt-4">
+            <ul class="pagination justify-content-center flex-wrap">
+                {% if page_obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page=1&scroll_id=all_plans">&laquo; first</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}&scroll_id=all_plans">previous</a></li>
+                {% endif %}
+        
+                <span class="ms-2 me-2">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }} 
+                </span>
+        
+                {% if page_obj.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}&scroll_id=all_plans">next</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}&scroll_id=all_plans">last &raquo;</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+
     </div>
     
 
