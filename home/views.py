@@ -18,7 +18,7 @@ import time
 import datetime
 import math
 import os
-
+import sys
 
 
 def home_view(request):
@@ -379,7 +379,7 @@ def generateplan(request):
                         n = 0
                         for t in data:
                             time.sleep(0)
-                            request_time = datetime.datetime.now()
+                            # request_time = datetime.datetime.now()
                             dm_res = make_request(BASE_URL, API_KEY, t['origin'], t['destination'], t['mode'],
                                                 t['traffic_model'],
                                                 t['departure_time'])
@@ -398,11 +398,13 @@ def generateplan(request):
 
                             except Exception as exc:
                                 print("%s) Please check if the address or coordinates in this line are correct" % n)
-                                continue
+                                # continue
+                                raise
+
 
                             result = Result.objects.create(
                                 user = request.user,
-                                request_time=request_time,
+                                # request_time=request_time,
                                 origin=t['origin'],
                                 destination=t['destination'],
                                 origin_addresses=origin_addresses,
@@ -515,6 +517,7 @@ def generateplan(request):
                     print(f"This is list for total f and c : {total_f_c}")
 
                     # appending all in one list
+                    print(f"l_names_len: {len(l_names)}, d_t_val_len: {len(d_t_val)}, fuel_n_cost_len: {len(fuel_n_cost)}")
                     for i in range(len(l_names)):
                         location_info = l_names[i]
                         distance_info = d_t_val[i]

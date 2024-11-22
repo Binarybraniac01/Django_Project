@@ -18,3 +18,19 @@ class Command(BaseCommand):
                 )
                 fort.save()
         self.stdout.write(self.style.SUCCESS('Successfully imported fort details.'))
+
+
+# This is for retriving accurate lat long data from forts.csv that i have downloaded 
+def add_lat_lon():
+    with open('home/forts.csv', 'r') as csvfile:
+            reader = csv.DictReader(csvfile)
+            count = 0
+            for row in reader:
+                 fort = Forts.objects.filter(fort_name__icontains=row['name']).first()
+                 if fort:
+                    fort.fort_latitude = row['latitude']
+                    fort.fort_longitude = row['longitude']
+                    fort.save()
+                    count += 1
+                    print(f"Add lat long for {fort.fort_name}")
+            print(count)

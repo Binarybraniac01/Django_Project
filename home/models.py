@@ -80,7 +80,7 @@ class Route(NullableModel):
 class Result(NullableModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name="user_result")
     id = models.AutoField(primary_key=True)
-    request_time = models.DateTimeField()
+    request_time = models.DateTimeField(auto_now_add=True)
     origin = models.CharField(max_length=255)
     destination = models.CharField(max_length=255)
     origin_addresses = models.CharField(max_length=500)

@@ -5,10 +5,10 @@ from django.contrib.auth.models import User
 
 class all_trips(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name="user_trips")
-    user_name = models.CharField(max_length=50, null=True, blank=True)
+    user_name = models.CharField(max_length=100, null=True, blank=True)
     trip_id = models.AutoField(primary_key=True)
-    trip_district = models.CharField(max_length=50,null=True, blank=True)
-    forts_visited = models.CharField(max_length=50, null=True, blank=True)
+    trip_district = models.CharField(max_length=100,null=True, blank=True)
+    forts_visited = models.CharField(max_length=1000, null=True, blank=True)
     required_time = models.CharField(max_length=100, null=True, blank=True)
     minimum_cost = models.FloatField(null=True, blank=True)
     date = models.DateField(null=True, blank=True)
