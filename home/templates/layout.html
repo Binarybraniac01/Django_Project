@@ -60,12 +60,51 @@
                     <a href="/ourplans" class="nav-item nav-link {{active2}}">Recommendations</a>
                     <a href="/knowaboutforts" class="nav-item nav-link {{active3}}">Know About Forts</a>
                     <a href="/feedback" class="nav-item nav-link {{active4}}">Feedback</a>
+                    {% if request.user.is_authenticated %}
+                        <a href="/logout/" class="nav-item nav-link">Logout</a>
+                    {% elif not request.user.is_authenticated %}
+                        <a href="/login-page/" class="nav-item nav-link" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
+                    {% endif %}
                 </div>
             </div>
         </nav>
 
     </div>
     <!-- Navbar End -->
+
+
+
+    <!-- Login Modal Start -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title fw-bold" id="loginModalLabel">Log In</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="/login-page/">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="inputusername" class="form-label">Username</label>
+                            <input type="text" required name="username" id="inputusername" class="form-control" placeholder="Enter your username">
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputpass" class="form-label">Password</label>
+                            <input type="password" required name="password" id="inputpass" class="form-control" placeholder="Enter your password">
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-block">Log In</button>
+                        </div>
+                        <p class="text-center mt-3">Don't have an account? 
+                            <a href="/register-page/" class="text-primary text-decoration-underline">Register</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Login Modal End -->
 
 
 

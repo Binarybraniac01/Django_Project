@@ -1,4 +1,7 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+
+
 from django.contrib import messages
 
 from django.core.mail import send_mail
@@ -9,6 +12,7 @@ from .models import *
 import os
 
 
+@login_required(login_url="/login-page/")
 def feedback(request):
     if request.method == "POST":
         data = request.POST
