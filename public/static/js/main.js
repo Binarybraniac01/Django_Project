@@ -73,23 +73,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-
 function showDirections(button) {
   // Get the value of the data-item attribute
-  var itemData = button.getAttribute('data-item');
+  const itemData = button.getAttribute('data-item');
 
-  // Split the data-item attribute to extract latitude and longitude
-  var coordinates = itemData.split(',');
-  var latitude = coordinates[0].trim(); // Latitude
-  var longitude = coordinates[1].trim(); // Longitude
+  // Remove parentheses and single quotes
+  const cleanedInput = itemData.replace(/[()']/g, "");
+
+  // Split the string by the comma separating the coordinate pairs
+  const coordinatePairs = cleanedInput.split(", ");
+
+  // Further split each coordinate pair into latitude and longitude
+  const coordinates = coordinatePairs.map(pair => pair.split(","));
+
+  // Access each coordinate
+  const [lat1, lon1] = coordinates[0];
+  const [lat2, lon2] = coordinates[1];
+
+  // Output the results
+  // console.log("First Coordinate:", { latitude: lat1, longitude: lon1 });
+  // console.log("Second Coordinate:", { latitude: lat2, longitude: lon2 });
 
   // Construct the Google Maps URL
-  var mapsUrl = "https://www.google.com/maps?q=" + latitude + "," + longitude;
+  // "https://www.google.com/maps/dir/'19.2454,73.1186'/'19.2962,72.8883'/" 
+  var mapsUrl = "https://www.google.com/maps/dir/" + lat1 + "," + lon1 + "/" + lat2 + "," + lon2 + "/"
 
   // Open Google Maps in a new tab
   window.open(mapsUrl, "_blank");
 }
-
 
 
 (function ($) {

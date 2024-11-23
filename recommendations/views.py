@@ -470,7 +470,7 @@ def recom_generateplan(request):
                         dist = dt.distance_text
                         t_time = dt.duration_in_traffic_text
                         d_t_val.append((dist, t_time))
-                        data.append(dis)   # look here for go to map
+                        data.append((org, dis))   # look here for get directions  # changed here 
                         total.append(t_time)
                         d_val.append(dist)
 
