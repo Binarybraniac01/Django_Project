@@ -88,7 +88,9 @@ def ourplans(request):
                             "Each fort holds tales of Maratha valor and offers breathtaking views, scenic drives, and a unique piece of history. "
                             "Perfect for adventurers and history lovers, this journey brings Maharashtra’s rich heritage to life with every stop. "
                         )
-                recom_img = f"recom_{n}.jpg"
+                # To choose random element from list (fortname)
+                img_name = random.choice(fort_names)
+                recom_img = f"{img_name}.png"
                 n += 1 
                 
                 recommendation = all_recommendations.objects.create(
@@ -417,6 +419,7 @@ def recom_generateplan(request):
                             except Exception as exc:
                                 print("%s) Please check if the address or coordinates in this line are correct" % n)
                                 # continue
+                                print(t['destination'], "is faulty")
                                 raise
 
                             result = Result.objects.create(
