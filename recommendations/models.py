@@ -30,7 +30,7 @@ class all_recommendations(models.Model):
     recom_forts = models.CharField(max_length=500, null=True, blank=True)
     recom_title = models.CharField(max_length=200, null=True, blank=True)
     recom_details = models.TextField(null=True, blank=True)
-    image_name = models.ImageField(upload_to='img/recomendation_imgs', null=True, blank=True) 
+    image_name = models.CharField(max_length=500, null=True, blank=True) 
     date = models.DateField(auto_now_add=True, null=True)
 
     def __repr__(self) -> str:

@@ -3,8 +3,8 @@ from django.contrib import admin
 # Register your models here.
 from home.models import *
 
-class Fort_Details_Admin(admin.ModelAdmin):
-    list_display = ["fort_id","fort_district", "fort_name", "fort_latitude", "fort_longitude", "link"]
+class Forts_Admin(admin.ModelAdmin):
+    list_display = ["fort_id","fort_district", "fort_name", "fort_latitude", "fort_longitude", "fort_image", "link"]
     search_fields = ["fort_district", "fort_name"]
 
 class latitude_longitude_Admin(admin.ModelAdmin):
@@ -20,7 +20,7 @@ class Result_Admin(admin.ModelAdmin):
     list_display = ["user", "id","request_time", "origin", "destination", "distance_text", "duration_text", "duration_in_traffic_text"]
 
 
-admin.site.register(Forts, Fort_Details_Admin)
+admin.site.register(Forts, Forts_Admin)
 admin.site.register(latitude_longitude, latitude_longitude_Admin)
 # admin.site.register(user_location, user_location_Admin)
 admin.site.register(Route, Route_Admin)

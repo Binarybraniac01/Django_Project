@@ -34,3 +34,20 @@ def add_lat_lon():
                     count += 1
                     print(f"Add lat long for {fort.fort_name}")
             print(count)
+
+
+import os
+def add_fort_images():
+    count= 0
+    for filename in os.listdir("public/media/img/fort_images"):
+        # Get file name without extension and its extension
+        base_name, ext = os.path.splitext(filename)
+        
+        # Search the fortname in fort_obj
+        fort_obj = Forts.objects.filter(fort_name__icontains=base_name).first()
+        if fort_obj:
+            fort_obj.fort_image = f"img/fort_images/{filename}"
+            fort_obj.save()
+            count += 1
+    print(count)
+    

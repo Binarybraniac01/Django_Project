@@ -23,6 +23,7 @@ class Forts(models.Model):
     fort_latitude = models.FloatField(null=True, blank=True)
     fort_longitude = models.FloatField(null=True, blank=True)
     link = models.URLField()
+    fort_image = models.ImageField(upload_to="img/fort_images/", null=True, blank=True)
 
     class Meta:
         ordering = ['fort_id']  # Order by `fort_id` in ascending order

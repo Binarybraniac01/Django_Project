@@ -59,7 +59,7 @@ def ourplans(request):
                       .values_list('trip_district', flat=True)
                     .distinct()
             )
-            print(planned_trips_dist)
+            # print(planned_trips_dist)
 
             random_dist = random.sample(planned_trips_dist, min(5, len(planned_trips_dist)))
             recommend_dist_fort = []
@@ -90,7 +90,8 @@ def ourplans(request):
                         )
                 # To choose random element from list (fortname)
                 img_name = random.choice(fort_names)
-                recom_img = f"{img_name}.png"
+                img_obj = Forts.objects.filter(fort_name=img_name).first()
+                recom_img = img_obj.fort_image
                 n += 1 
                 
                 recommendation = all_recommendations.objects.create(
