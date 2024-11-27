@@ -4,8 +4,8 @@ __pycache__/
 *$py.class
 
 # Local and production environment settings
-.env
-*.env
+# .env
+# *.env
 
 # Secret files and keys
 config/settings/local.py
@@ -16,8 +16,8 @@ venv/
 env/
 
 # Static and media files
-staticfiles/
-media/
+# staticfiles/
+# media/
 
 # Logs and runtime files
 *.log
@@ -42,4 +42,3 @@ media/
 
 
 # Others
-main.py

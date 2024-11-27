@@ -26,9 +26,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-&_mgb)fh90t73iq59lzy%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = str(os.environ.get('DEBUG')) == "1" #check for debug to be false or true
 
-ALLOWED_HOSTS = []
-if not DEBUG:
-    ALLOWED_HOSTS += [os.environ.get('ALLOWED_HOST')] # allowed hosts are required when debug is false 
+ALLOWED_HOSTS = ['*']
+# if not DEBUG:
+#     ALLOWED_HOSTS += [os.environ.get('ALLOWED_HOST')] # allowed hosts are required when debug is false 
 
 
 # Application definition
