@@ -1,8 +1,9 @@
 Django==5.1.2
+django-dotenv==1.4.2
+ipython==8.29.0
 mysqlclient==2.2.5
 pillow==11.0.0
 requests==2.32.3
 urllib3==2.2.3
 uuid==1.30
-ipython==8.29.0
 
