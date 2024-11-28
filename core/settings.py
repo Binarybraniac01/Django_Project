@@ -81,14 +81,31 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'forts_database',
+#         'USER' : 'root',
+#         'PASSWORD' : 'root',
+#         'HOST' : 'localhost',
+#         'PORT' : '3306'
+#     }
+# }
+
+# prod database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'forts_database',
-        'USER' : 'root',
-        'PASSWORD' : 'root',
-        'HOST' : 'localhost',
-        'PORT' : '3306'
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASS'),
+        'HOST': os.environ.get('DB_HOST'),
+        'PORT': '3306',  # Default MySQL port,
+        'OPTIONS': {
+            'charset': 'utf8mb4',
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+            'ssl':{'ca': os.path.join(BASE_DIR , 'ap-south-1-bundle.pem')}
+        },
     }
 }
 
